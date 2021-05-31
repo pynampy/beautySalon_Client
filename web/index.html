@@ -27,6 +27,27 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAoR7TpMkwhE09Wz7uowj1kYjGRyVRcHWI",
+    authDomain: "salon-crm-5b500.firebaseapp.com",
+    projectId: "salon-crm-5b500",
+    storageBucket: "salon-crm-5b500.appspot.com",
+    messagingSenderId: "266024686561",
+    appId: "1:266024686561:web:899b58c04954288140b8a0"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

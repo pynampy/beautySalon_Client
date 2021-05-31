@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:salon_client/screens/AddDetails.dart';
+import 'package:salon_client/screens/CustomerPhone.dart';
+import 'package:salon_client/screens/LoyaltyPointsAdded.dart';
 import './screens/mainmenu.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main()async  {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
@@ -14,6 +20,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MainMenu(),
+      routes: {
+        CustomerPhone.route : (ctx) => CustomerPhone(),
+        LoyaltyPointsAddedScreen.route: (ctx) => LoyaltyPointsAddedScreen(),
+        Details.route: (ctx) => Details()
+      },
     );
   }
 }

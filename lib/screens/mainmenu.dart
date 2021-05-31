@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salon_client/screens/CustomerPhone.dart';
 import 'package:salon_client/widgets/custombutton.dart';
 
 class MainMenu extends StatefulWidget {
@@ -19,7 +20,9 @@ class _MainMenuState extends State<MainMenu> {
           children: [
             CustomButton(
               text: "Customer",
-              onPressed: () => {print("object")},
+              onPressed: (){
+                Navigator.of(context).popAndPushNamed(CustomerPhone.route);
+              },
             ),
             CustomButton(
               text: "asdasd",
