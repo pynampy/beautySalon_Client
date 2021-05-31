@@ -9,7 +9,6 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height.roundToDouble();
     var screenWidth = MediaQuery.of(context).size.width.roundToDouble();
-
     screenWidth = screenWidth <= 1200 ? screenWidth : 1200;
     screenHeight = screenHeight <= 1200 ? screenHeight : 1200;
     return Container(
