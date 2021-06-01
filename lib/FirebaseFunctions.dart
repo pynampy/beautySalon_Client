@@ -53,3 +53,15 @@ Future<Null> addUser(
     "DataOfVisit": DateTime.now()
   });
 }
+
+Future<List> vistList() async {
+  var finalList = <List>[];
+
+  var userDetails = <String, dynamic>{};
+
+  var visitsAll = await visits.get();
+
+  visitsAll.docs.forEach((visit) {});
+
+  return finalList;
+}

@@ -107,6 +107,8 @@ class _VisitsScreenState extends State<VisitsScreen> {
     screenWidth = screenWidth <= 1200 ? screenWidth : 1200;
     screenHeight = screenHeight <= 800 ? screenHeight : 800;
 
+    print(screenHeight);
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -153,13 +155,13 @@ class _VisitsScreenState extends State<VisitsScreen> {
     while (i < visitsList.length) {
       dataRows.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         singleCell(
-            screenHeight / 20, screenWidth / 6, "${visitsList[i][0]}", false),
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
         singleCell(
-            screenHeight / 20, screenWidth / 6, "${visitsList[i][1]}", false),
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
         singleCell(
-            screenHeight / 20, screenWidth / 6, "${visitsList[i][2]}", false),
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
         singleCell(
-            screenHeight / 20, screenWidth / 6, "${visitsList[i][3]}", false),
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
       ]));
       i++;
     }
@@ -173,12 +175,12 @@ class _VisitsScreenState extends State<VisitsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              singleCell(screenHeight / 20, screenWidth / 6, "Name", true),
-              singleCell(screenHeight / 20, screenWidth / 6, "Birthday", true),
+              singleCell(screenHeight / 16, screenWidth / 5, "Name", true),
+              singleCell(screenHeight / 16, screenWidth / 5, "Birthday", true),
               singleCell(
-                  screenHeight / 20, screenWidth / 6, "Date of Visit", true),
+                  screenHeight / 16, screenWidth / 5, "Date of Visit", true),
               singleCell(
-                  screenHeight / 20, screenWidth / 6, "Loyalty Points", true)
+                  screenHeight / 16, screenWidth / 5, "Loyalty Points", true)
             ],
           ),
           SizedBox(
@@ -201,7 +203,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
     return Container(
         height: height,
         width: width,
-        padding: EdgeInsets.all(10),
+
         // color: Colors.blue,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black, width: isTitle ? 2 : 1)),
@@ -209,6 +211,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
             child: Text(
           text,
           style: TextStyle(
+              fontSize: height * 0.3,
               fontWeight: isTitle ? FontWeight.bold : FontWeight.normal),
           textAlign: TextAlign.center,
         )));
