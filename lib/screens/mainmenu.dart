@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:salon_client/screens/CustomerPhone.dart';
+import 'package:salon_client/screens/visits.dart';
 import 'package:salon_client/widgets/custombutton.dart';
 
 class MainMenu extends StatefulWidget {
@@ -25,8 +27,11 @@ class _MainMenuState extends State<MainMenu> {
               },
             ),
             CustomButton(
-              text: "asdasd",
-              onPressed: () => {print("object")},
+              text: "User Data",
+              onPressed: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => VisitsScreen()))
+              },
             )
           ],
         ),

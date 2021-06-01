@@ -1,104 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../FirebaseFunctions.dart';
+
 class VisitsScreen extends StatefulWidget {
   @override
   _VisitsScreenState createState() => _VisitsScreenState();
 }
 
 class _VisitsScreenState extends State<VisitsScreen> {
-  var visitsList = [
-    [
-      "Micheal Scott",
-      "March/01",
-      "June/02",
-      "200",
-    ],
-    [
-      "Dwight Shrute",
-      "May/01",
-      "June/02",
-      "100",
-    ],
-    [
-      "Jim Halpert",
-      "Jun/30",
-      "June/03",
-      "100",
-    ],
-    [
-      "Andrew Bernad",
-      "March/29",
-      "June/02",
-      "100",
-    ],
-    [
-      "Naman Jain",
-      "August/01",
-      "June/02",
-      "100",
-    ],
-    [
-      "Micheal Scott",
-      "March/01",
-      "June/02",
-      "200",
-    ],
-    [
-      "Dwight Shrute",
-      "May/01",
-      "June/02",
-      "100",
-    ],
-    [
-      "Jim Halpert",
-      "Jun/30",
-      "June/03",
-      "100",
-    ],
-    [
-      "Andrew Bernad",
-      "March/29",
-      "June/02",
-      "100",
-    ],
-    [
-      "Naman Jain",
-      "August/01",
-      "June/02",
-      "100",
-    ],
-    [
-      "Micheal Scott",
-      "March/01",
-      "June/02",
-      "200",
-    ],
-    [
-      "Dwight Shrute",
-      "May/01",
-      "June/02",
-      "100",
-    ],
-    [
-      "Jim Halpert",
-      "Jun/30",
-      "June/03",
-      "100",
-    ],
-    [
-      "Andrew Bernad",
-      "March/29",
-      "June/02",
-      "100",
-    ],
-    [
-      "Naman Jain",
-      "August/01",
-      "June/02",
-      "100",
-    ],
-  ];
-
   @override
   Widget build(BuildContext context) {
     var screenHeight =
@@ -106,8 +15,6 @@ class _VisitsScreenState extends State<VisitsScreen> {
     var screenWidth = MediaQuery.of(context).size.width.roundToDouble() - 40.0;
     screenWidth = screenWidth <= 1200 ? screenWidth : 1200;
     screenHeight = screenHeight <= 800 ? screenHeight : 800;
-
-    print(screenHeight);
 
     return Scaffold(
       body: Center(
@@ -135,10 +42,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   height: (2 * screenHeight) / 3,
                   width: screenWidth,
                   // color: Colors.amber,
-                  child: Center(
-                    child: Column(
-                        children: [vistsTable(screenHeight, screenWidth)]),
-                  ),
+                  child: Center(child: vistsTable(screenHeight, screenWidth)),
                 ),
               ],
             ),
@@ -149,28 +53,11 @@ class _VisitsScreenState extends State<VisitsScreen> {
   }
 
   Widget vistsTable(double screenHeight, double screenWidth) {
-    var dataRows = <Widget>[];
-
-    int i = 0;
-    while (i < visitsList.length) {
-      dataRows.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
-      ]));
-      i++;
-    }
-
     return Container(
       width: screenWidth,
       // color: Colors.yellow,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -188,10 +75,23 @@ class _VisitsScreenState extends State<VisitsScreen> {
           ),
           Container(
             height: (2 * screenHeight) / 4,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [...dataRows],
-              ),
+            child: FutureBuilder(
+              future: vistList(),
+              builder: (context, snapshot) {
+                print(snapshot.connectionState);
+                if (snapshot.hasData) {
+                  print(snapshot.data);
+                  var visitsList = snapshot.data;
+                  return SingleChildScrollView(
+                      child: dataRows(screenHeight, screenWidth, visitsList));
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error"),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           )
         ],
@@ -215,5 +115,29 @@ class _VisitsScreenState extends State<VisitsScreen> {
               fontWeight: isTitle ? FontWeight.bold : FontWeight.normal),
           textAlign: TextAlign.center,
         )));
+  }
+
+  Widget dataRows(double screenHeight, double screenWidth, dynamic visitsList) {
+    var dataRows = <Widget>[];
+
+    int i = 0;
+    print("vist len ${visitsList.length}");
+    while (i < visitsList.length) {
+      dataRows.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        singleCell(
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
+        singleCell(
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
+        singleCell(
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
+        singleCell(
+            screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
+      ]));
+      i++;
+    }
+
+    return Column(
+      children: [...dataRows],
+    );
   }
 }

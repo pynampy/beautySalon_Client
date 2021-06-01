@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:intl/intl.dart';
+
 var users = FirebaseFirestore.instance.collection("users");
 var visits = FirebaseFirestore.instance.collection("visits");
 
@@ -15,6 +17,10 @@ Future<bool> customerCheck(String number) async {
 }
 
 Future<Null> increaseLoyaltyPoints(String userID) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
+
   // get the user document from the ID
   var userDoc = await users.doc(userID).get();
 
@@ -31,27 +37,28 @@ Future<Null> increaseLoyaltyPoints(String userID) async {
   await visits.add({
     "UserID": userID,
     "LPafterVisit": loyaltyPoints,
-    "DateOfVisit": DateTime.now()
+    "DateOfVisit": formatted
   });
 }
 
 Future<Null> addUser(
     String name, String email, String dob, String phone) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
+
   // add user
   var docRef = await users.add({
     "Number": phone,
     "Name": name,
     "Loyalty Points": 100,
-    // "DOB": TODO: Add dataTime,
+    "DOB": dob,
     "Email": email,
   });
 
   // add user's visit
-  await visits.add({
-    "LPafterVisit": 100,
-    "UserID": docRef.id,
-    "DataOfVisit": DateTime.now()
-  });
+  await visits.add(
+      {"LPafterVisit": 100, "UserID": docRef.id, "DateOfVisit": formatted});
 }
 
 Future<List> vistList() async {
@@ -61,7 +68,31 @@ Future<List> vistList() async {
 
   var visitsAll = await visits.get();
 
-  visitsAll.docs.forEach((visit) {});
+  for (var visit in visitsAll.docs) {
+    var visitData = visit.data();
+
+    if (userDetails.containsKey(visitData["UserID"])) {
+      finalList.add([
+        userDetails[visitData["UserID"]][0],
+        userDetails[visitData["UserID"]][1],
+        visitData["DateOfVisit"],
+        visitData["LPafterVisit"]
+      ]);
+    } else {
+      var user = await users.doc(visitData["UserID"]).get();
+
+      userDetails[visitData["UserID"]] = [
+        user.data()!["Name"],
+        user.data()!["DOB"]
+      ];
+      finalList.add([
+        user.data()!["Name"],
+        user.data()!["DOB"],
+        visitData["DateOfVisit"],
+        visitData["LPafterVisit"]
+      ]);
+    }
+  }
 
   return finalList;
 }
