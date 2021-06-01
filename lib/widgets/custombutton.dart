@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
+
   final String text;
   final Function onPressed;
 
@@ -11,17 +12,17 @@ class CustomButton extends StatelessWidget {
     var screenWidth = MediaQuery.of(context).size.width.roundToDouble();
     screenWidth = screenWidth <= 1200 ? screenWidth : 1200;
     screenHeight = screenHeight <= 800 ? screenHeight : 800;
-    return Container(
+    return SizedBox(
       height: screenHeight / 10,
       width: screenWidth / 3,
-      margin: const EdgeInsets.all(10),
+      //margin: const EdgeInsets.all(10),
       child: Material(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.pink[100],
+        color: Colors.white,
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
-          splashColor: Colors.pink,
-          hoverColor: Colors.pink[300],
+          splashColor: Colors.black12,
+          hoverColor: Colors.black26,
           onTap: () {
             onPressed();
           },
