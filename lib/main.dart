@@ -5,7 +5,11 @@ import 'package:salon_client/screens/LoyaltyPointsAdded.dart';
 import './screens/mainmenu.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+<<<<<<< HEAD
 // import './screens/visits.dart';
+=======
+//import './screens/visits.dart';
+>>>>>>> 3023a3b... UI fixes
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
