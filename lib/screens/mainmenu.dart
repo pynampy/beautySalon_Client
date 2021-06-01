@@ -10,8 +10,8 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height.roundToDouble();
-    final screenWidth = MediaQuery.of(context).size.width.roundToDouble();
+    // final screenHeight = MediaQuery.of(context).size.height.roundToDouble();
+    // final screenWidth = MediaQuery.of(context).size.width.roundToDouble();
 
     return Scaffold(
       body: Center(
@@ -20,7 +20,7 @@ class _MainMenuState extends State<MainMenu> {
           children: [
             CustomButton(
               text: "Customer",
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(context).popAndPushNamed(CustomerPhone.route);
               },
             ),
