@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salon_client/screens/CustomerPhone.dart';
-import 'package:salon_client/screens/visits.dart';
+
 import 'package:salon_client/widgets/custombutton.dart';
 
 class MainMenu extends StatefulWidget {
@@ -21,7 +21,7 @@ class _MainMenuState extends State<MainMenu> {
           children: [
             Container(
               height: screenHeight,
-              width: screenWidth/2,
+              width: screenWidth / 2,
               color: Color(0xffEF7F69),
               child: Center(
                 child: CustomButton(
@@ -34,9 +34,8 @@ class _MainMenuState extends State<MainMenu> {
             ),
             Container(
               height: screenHeight,
-              width: screenWidth/2,
+              width: screenWidth / 2,
               color: Color(0xff79C2CB),
-              
               child: Center(
                 child: CustomButton(
                   text: "ADMIN",

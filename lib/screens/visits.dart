@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../FirebaseFunctions.dart';
 
 class VisitsScreen extends StatefulWidget {
+  static const route = "/VisitsScreen";
   @override
   _VisitsScreenState createState() => _VisitsScreenState();
 }
