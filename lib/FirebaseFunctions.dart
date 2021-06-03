@@ -61,7 +61,26 @@ Future<Null> addUser(
       {"LPafterVisit": 100, "UserID": docRef.id, "DateOfVisit": formatted});
 }
 
-Future<List> vistList() async {
+Future<List> userLists() async {
+  var userList = <List>[];
+
+  var userDetails = await users.get();
+
+  userDetails.docs.forEach((user) {
+    var userData = user.data();
+    userList.add([
+      userData["Name"],
+      userData["DOB"],
+      userData["Number"],
+      userData["Loyalty Points"]
+    ]);
+  });
+  print(userList);
+  return userList;
+}
+
+// Previous function to call all the visits
+/* Future<List> vistList() async {
   var finalList = <List>[];
 
   var userDetails = <String, dynamic>{};
@@ -95,4 +114,4 @@ Future<List> vistList() async {
   }
 
   return finalList;
-}
+} */

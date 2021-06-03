@@ -9,6 +9,8 @@ class VisitsScreen extends StatefulWidget {
 }
 
 class _VisitsScreenState extends State<VisitsScreen> {
+  // true when user taps on a user to see their visits
+  var checkUser = false;
   @override
   Widget build(BuildContext context) {
     var screenHeight =
@@ -31,7 +33,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   width: screenWidth,
                   child: Center(
                     child: Text(
-                      "Past Visits",
+                      "All Users",
                       style: TextStyle(
                           fontSize: 52,
                           fontWeight: FontWeight.bold,
@@ -64,9 +66,11 @@ class _VisitsScreenState extends State<VisitsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               singleCell(screenHeight / 16, screenWidth / 5, "Name", true),
-              singleCell(screenHeight / 16, screenWidth / 5, "Birthday", true),
-              singleCell(
-                  screenHeight / 16, screenWidth / 5, "Date of Visit", true),
+              if (!checkUser)
+                singleCell(
+                    screenHeight / 16, screenWidth / 5, "Birthday", true),
+              singleCell(screenHeight / 16, screenWidth / 5,
+                  checkUser == false ? "Phone Number" : "Date of Visit", true),
               singleCell(
                   screenHeight / 16, screenWidth / 5, "Loyalty Points", true)
             ],
@@ -77,7 +81,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
           Container(
             height: (2 * screenHeight) / 4,
             child: FutureBuilder(
-              future: vistList(),
+              future: userLists(),
               builder: (context, snapshot) {
                 print(snapshot.connectionState);
                 if (snapshot.hasData) {
@@ -124,16 +128,22 @@ class _VisitsScreenState extends State<VisitsScreen> {
     int i = 0;
     print("vist len ${visitsList.length}");
     while (i < visitsList.length) {
-      dataRows.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
-      ]));
+      dataRows.add(GestureDetector(
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          singleCell(
+              screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
+          singleCell(
+              screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
+          singleCell(
+              screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
+          singleCell(
+              screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
+        ]),
+        /* onTap: () {
+          print(visitsList[i][0]);
+          checkUser = true;
+        }, */
+      ));
       i++;
     }
 
