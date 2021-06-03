@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-
   final String text;
   final Function onPressed;
+  final double height;
+  final double width;
 
-  CustomButton({required this.text, required this.onPressed});
+  CustomButton(
+      {required this.text,
+      required this.onPressed,
+      required this.height,
+      required this.width});
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height.roundToDouble();
@@ -13,8 +18,8 @@ class CustomButton extends StatelessWidget {
     screenWidth = screenWidth <= 1200 ? screenWidth : 1200;
     screenHeight = screenHeight <= 800 ? screenHeight : 800;
     return SizedBox(
-      height: screenHeight / 10,
-      width: screenWidth / 3,
+      height: height,
+      width: width,
       //margin: const EdgeInsets.all(10),
       child: Material(
         borderRadius: BorderRadius.circular(20),
