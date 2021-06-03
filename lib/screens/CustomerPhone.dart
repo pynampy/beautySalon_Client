@@ -32,28 +32,16 @@ class _CustomerPhoneState extends State<CustomerPhone> {
             Text(
               "Enter your Phone Number",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic
-                ),
+                  fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
             ),
             Container(
-              width: screenWidth*0.2,
-              height: screenHeight*0.05,
-              margin: EdgeInsets.only(
-                top: 10
-              ),
-              padding: EdgeInsets.all(
-                10
-              ),
-
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xffEF7F69)
-
-                )
-              ),
+              width: screenWidth * 0.2,
+              height: screenHeight * 0.05,
+              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.all(10),
+              decoration:
+                  BoxDecoration(border: Border.all(color: Color(0xffEF7F69))),
               child: TextField(
-
                 decoration: InputDecoration(border: InputBorder.none),
                 controller: phoneTextController,
               ),
@@ -65,16 +53,16 @@ class _CustomerPhoneState extends State<CustomerPhone> {
                         await customerCheck(phoneTextController.text);
                     if (existingCustomer) {
                       Navigator.of(context)
-                          .popAndPushNamed(LoyaltyPointsAddedScreen.route);
+                          .pushNamed(LoyaltyPointsAddedScreen.route);
                     } else {
-                      Navigator.of(context).popAndPushNamed(Details.route,
+                      Navigator.of(context).pushNamed(Details.route,
                           arguments: phoneTextController.text);
                     }
                   },
                   child: Container(
                       //height: 50,
                       padding: EdgeInsets.all(10),
-                      width: screenWidth*0.2,
+                      width: screenWidth * 0.2,
                       color: Color(0xffEF7F69),
                       margin: EdgeInsets.only(top: 10),
                       child: Text(

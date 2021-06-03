@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salon_client/screens/CustomerPhone.dart';
+import 'package:salon_client/screens/visits.dart';
 
 import 'package:salon_client/widgets/custombutton.dart';
 
@@ -27,7 +28,7 @@ class _MainMenuState extends State<MainMenu> {
                 child: CustomButton(
                   text: "CUSTOMER",
                   onPressed: () {
-                    Navigator.of(context).popAndPushNamed(CustomerPhone.route);
+                    Navigator.of(context).pushNamed(CustomerPhone.route);
                   },
                 ),
               ),
@@ -39,7 +40,9 @@ class _MainMenuState extends State<MainMenu> {
               child: Center(
                 child: CustomButton(
                   text: "ADMIN",
-                  onPressed: () => {print("object")},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(VisitsScreen.route);
+                  },
                 ),
               ),
             )

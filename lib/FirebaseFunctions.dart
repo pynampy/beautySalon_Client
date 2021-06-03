@@ -66,7 +66,7 @@ Future<List> vistList() async {
 
   var userDetails = <String, dynamic>{};
 
-  var visitsAll = await visits.get();
+  var visitsAll = await visits.orderBy("DateOfVisit").get();
 
   for (var visit in visitsAll.docs) {
     var visitData = visit.data();
