@@ -26,6 +26,8 @@ class _MainMenuState extends State<MainMenu> {
               color: Color(0xffEF7F69),
               child: Center(
                 child: CustomButton(
+                  height: screenHeight / 10,
+                  width: screenWidth / 3,
                   text: "CUSTOMER",
                   onPressed: () {
                     Navigator.of(context).pushNamed(CustomerPhone.route);
@@ -39,6 +41,8 @@ class _MainMenuState extends State<MainMenu> {
               color: Color(0xff79C2CB),
               child: Center(
                 child: CustomButton(
+                  height: screenHeight / 10,
+                  width: screenWidth / 3,
                   text: "ADMIN",
                   onPressed: () {
                     Navigator.of(context).pushNamed(VisitsScreen.route);
