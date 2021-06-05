@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:salon_client/widgets/custombutton.dart';
 
 import '../FirebaseFunctions.dart';
 
 class VisitsScreen extends StatefulWidget {
-  static const route = '/VisitsScreen';
-
+  static const route = "/VisitsScreen";
   @override
   _VisitsScreenState createState() => _VisitsScreenState();
 }
 
 class _VisitsScreenState extends State<VisitsScreen> {
+  // true when user taps on a user to see their visits
+  var checkUser = false;
+  var checkUserID = "";
+  var checkUserName = "";
   @override
   Widget build(BuildContext context) {
     var screenHeight =
@@ -32,7 +36,7 @@ class _VisitsScreenState extends State<VisitsScreen> {
                   width: screenWidth,
                   child: Center(
                     child: Text(
-                      "Past Visits",
+                      "All Users",
                       style: TextStyle(
                           fontSize: 52,
                           fontWeight: FontWeight.bold,
@@ -65,9 +69,11 @@ class _VisitsScreenState extends State<VisitsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               singleCell(screenHeight / 16, screenWidth / 5, "Name", true),
-              singleCell(screenHeight / 16, screenWidth / 5, "Birthday", true),
-              singleCell(
-                  screenHeight / 16, screenWidth / 5, "Date of Visit", true),
+              if (!checkUser)
+                singleCell(
+                    screenHeight / 16, screenWidth / 5, "Birthday", true),
+              singleCell(screenHeight / 16, screenWidth / 5,
+                  checkUser == false ? "Phone Number" : "Date of Visit", true),
               singleCell(
                   screenHeight / 16, screenWidth / 5, "Loyalty Points", true)
             ],
@@ -75,27 +81,51 @@ class _VisitsScreenState extends State<VisitsScreen> {
           SizedBox(
             height: 20,
           ),
-          Container(
-            height: (2 * screenHeight) / 4,
-            child: FutureBuilder(
-              future: vistList(),
-              builder: (context, snapshot) {
-                print(snapshot.connectionState);
-                if (snapshot.hasData) {
-                  print(snapshot.data);
-                  var visitsList = snapshot.data;
-                  return SingleChildScrollView(
-                      child: dataRows(screenHeight, screenWidth, visitsList));
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error"),
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
+          if (checkUser)
+            Container(
+              height: (2 * screenHeight) / 4,
+              child: FutureBuilder(
+                future: visitList(checkUserID, checkUserName),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    var visitsList = snapshot.data;
+                    return SingleChildScrollView(
+                        child: dataRows(screenHeight, screenWidth, visitsList));
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error"),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
-          )
+          if (!checkUser)
+            Container(
+              height: (2 * screenHeight) / 4,
+              child: FutureBuilder(
+                future: userLists(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                        child:
+                            dataRows(screenHeight, screenWidth, snapshot.data));
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error"),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            )
         ],
       ),
     );
@@ -122,20 +152,43 @@ class _VisitsScreenState extends State<VisitsScreen> {
   Widget dataRows(double screenHeight, double screenWidth, dynamic visitsList) {
     var dataRows = <Widget>[];
 
-    int i = 0;
-    print("vist len ${visitsList.length}");
-    while (i < visitsList.length) {
-      dataRows.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][0]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][1]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][2]}", false),
-        singleCell(
-            screenHeight / 18, screenWidth / 5, "${visitsList[i][3]}", false),
-      ]));
-      i++;
+    for (var i = 0; i < visitsList.length; i++) {
+      dataRows.add(GestureDetector(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            singleCell(screenHeight / 18, screenWidth / 5,
+                "${visitsList[i][0]}", false),
+            singleCell(screenHeight / 18, screenWidth / 5,
+                "${visitsList[i][1]}", false),
+            singleCell(screenHeight / 18, screenWidth / 5,
+                "${visitsList[i][2]}", false),
+            if (!checkUser)
+              singleCell(screenHeight / 18, screenWidth / 5,
+                  "${visitsList[i][3]}", false),
+          ]),
+          onTap: () {
+            setState(() {
+              checkUser = true;
+              checkUserID = visitsList[i][4];
+              checkUserName = visitsList[i][0];
+            });
+          }));
+    }
+
+    if (checkUser) {
+      dataRows.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomButton(
+            text: "Back",
+            onPressed: () {
+              setState(() {
+                checkUser = false;
+                checkUserID = "";
+                checkUserName = "";
+              });
+            },
+            height: screenHeight / 18,
+            width: screenWidth / 6),
+      ));
     }
 
     return Column(
