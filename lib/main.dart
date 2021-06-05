@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:salon_client/screens/AddDetails.dart';
 import 'package:salon_client/screens/CustomerPhone.dart';
 import 'package:salon_client/screens/LoyaltyPointsAdded.dart';
+import 'package:salon_client/screens/visits.dart';
 import './screens/mainmenu.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       routes: {
         CustomerPhone.route: (ctx) => CustomerPhone(),
         LoyaltyPointsAddedScreen.route: (ctx) => LoyaltyPointsAddedScreen(),
-        Details.route: (ctx) => Details()
+        Details.route: (ctx) => Details(),
+        VisitsScreen.route: (ctx) => VisitsScreen()
       },
     );
   }
