@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:salon_client/FirebaseFunctions.dart';
 import 'package:salon_client/screens/AddDetails.dart';
 import 'package:salon_client/screens/LoyaltyPointsAdded.dart';
+import 'package:flutter/foundation.dart';
 
 class CustomerPhone extends StatefulWidget {
   static const route = "/CustomerPhone";
@@ -22,8 +23,8 @@ class _CustomerPhoneState extends State<CustomerPhone> {
       color: Color(0xffEF7F69),
       child: Center(
           child: Container(
-        height: screenHeight * 0.8,
-        width: screenWidth * 0.4,
+        height: screenHeight * 0.95,
+        width: kIsWeb? screenWidth * 0.4 : screenWidth * 0.95,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(25)),
         child: Column(
@@ -35,7 +36,7 @@ class _CustomerPhoneState extends State<CustomerPhone> {
                   fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
             ),
             Container(
-              width: screenWidth * 0.2,
+              width: kIsWeb? screenWidth * 0.2 : screenWidth * 0.7,
               height: screenHeight * 0.05,
               margin: EdgeInsets.only(top: 10),
               padding: EdgeInsets.all(10),
@@ -62,7 +63,7 @@ class _CustomerPhoneState extends State<CustomerPhone> {
                   child: Container(
                       //height: 50,
                       padding: EdgeInsets.all(10),
-                      width: screenWidth * 0.2,
+                      width: kIsWeb? screenWidth * 0.2 : screenWidth * 0.7 ,
                       color: Color(0xffEF7F69),
                       margin: EdgeInsets.only(top: 10),
                       child: Text(

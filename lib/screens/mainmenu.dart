@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:salon_client/screens/CustomerPhone.dart';
 import 'package:salon_client/screens/visits.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:salon_client/widgets/custombutton.dart';
 
 class MainMenu extends StatefulWidget {
@@ -17,7 +17,7 @@ class _MainMenuState extends State<MainMenu> {
 
     return Scaffold(
       body: Center(
-        child: Row(
+        child: kIsWeb? Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -51,7 +51,40 @@ class _MainMenuState extends State<MainMenu> {
               ),
             )
           ],
-        ),
+        ): Column(
+          children:[
+            Container(
+              height: screenHeight/2,
+              width: screenWidth,
+              color: Color(0xffEF7F69),
+              child: Center(
+                child: CustomButton(
+                  height: screenHeight / 10,
+                  width: screenWidth / 3,
+                  text: "CUSTOMER",
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CustomerPhone.route);
+                  },
+                ),
+              ),
+            ),
+            Container(
+              height: screenHeight/2,
+              width: screenWidth,
+              color: Color(0xff79C2CB),
+              child: Center(
+                child: CustomButton(
+                  height: screenHeight / 10,
+                  width: screenWidth / 3,
+                  text: "ADMIN",
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(VisitsScreen.route);
+                  },
+                ),
+              ),
+            )
+          ]
+        ) ,
       ),
     );
   }
