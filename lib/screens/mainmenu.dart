@@ -40,7 +40,9 @@ class _MainMenuState extends State<MainMenu> {
               child: Center(
                 child: CustomButton(
                   text: "ADMIN",
-                  onPressed: () => {print("object")},
+                  onPressed: () => {
+                    Navigator.of(context).popAndPushNamed(VisitsScreen.route)
+                  },
                 ),
               ),
             )
